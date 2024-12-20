@@ -1,0 +1,34 @@
+import socket
+import random
+
+def riempiMessagio(grandezza):
+    for i in grandezza:
+        messaggio=random.randint(0,9)
+    return messaggio
+
+
+def main ():
+    print("benvenuti nel programma di dossing piu funzionale del mondo")
+    ip = str(input("inserisci l'indirizzo ip"))
+    port = int(input("inserisci la porta "))
+
+    SRV_ADDRESS=ip
+    SRV_PORT= port
+
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)           
+    s.bind((SRV_ADDRESS, SRV_PORT))                     
+    s.listen(1)             
+    client_socket, client_address = s.accept()
+
+    messaggi=int(input("quanti pacchetti vuoi mandare"))
+
+
+    try:
+        for i in messaggi:
+
+            messaggio = riempiMessagio(1024)
+            client_socket.send(messaggio.encode("utf-8"))
+
+    except Exception as e:
+
+        print("connessione all'indirizzo {ip}, porta {port} non riuscita")
